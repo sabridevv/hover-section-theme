@@ -334,6 +334,11 @@
     },
     "page": {
       "title": "Page title"
+    },
+    "hover" : {
+      "first_cure" : "Cure 1 mois",
+      "second_cure" : "Cure 3 mois",
+      "third_cure" : "Cure 6 mois",
     }
   },
   "localization": {

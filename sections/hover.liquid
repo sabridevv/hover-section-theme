@@ -1,0 +1,306 @@
+{{ 'hover.css' | asset_url | stylesheet_tag }}
+{{ 'hover-middle-wide-card.css' | asset_url | stylesheet_tag }}
+{{ 'hover-product-card.css' | asset_url | stylesheet_tag }}
+{{ 'hover-small-card.css' | asset_url | stylesheet_tag }}
+{{ 'hover-wide-narrow.css' | asset_url | stylesheet_tag }}
+{{ 'hover.js' | asset_url | script_tag }}
+
+{% assign hover_block_counter = 0 %}
+
+<section class="custom-grid-layout">
+  <div class="grid-container">
+    {%- for block in section.blocks -%}
+      {%- case block.type -%}
+          {% comment %} First Block {% endcomment %}
+        {%- when 'product_card' -%}
+          <div class="grid-item tall">
+            {% if block.settings.background_image %}
+              {{
+                block.settings.background_image
+                | image_url: width: 3840
+                | image_tag: loading: 'lazy', width: block.settings.background_image.width
+              }}
+            {% endif %}
+            {% if block.settings.product != bank %}
+              <div class="overlay">
+                <div class="product-card">
+                  <div
+                    class="product-image"
+                  >
+                    {{
+                      block.settings.product.featured_image
+                      | image_url: width: 300
+                      | image_tag: loading: 'lazy', width: block.settings.background_image.width
+                    }}
+                  </div>
+
+                  <div class="product-info">
+                    <div class="rating">
+                      {% assign rating = 4.6 %}
+                      <span class="rating-stars">★★★★★</span>
+                      <span class="rating-value">4.5/5</span>
+                    </div>
+                    <p class="product-name">{{ block.settings.product.title }}</p>
+                    <p class="product-description">{{ block.settings.product.description | strip_html }}</p>
+                  </div>
+
+                  <a class="add-button" href="{{ block.settings.product.url }}">
+                    {% render 'icon-hover', icon: 'icon-plus' %}
+                  </a>
+                </div>
+              </div>
+            {% endif %}
+          </div>
+        {%- when 'hover_card' -%}
+          {% comment %} Second Block {% endcomment %}
+          {% assign special_block_counter = special_block_counter | plus: 1 %}
+          {% assign block_class = '' %}
+          {% case special_block_counter %}
+            {% when 1 %}
+              {% assign block_class = 'top-left' %}
+            {% when 2 %}
+              {% assign block_class = 'top-middle' %}
+            {% when 3 %}
+              {% assign block_class = 'top-right' %}
+          {% endcase %}
+          {%- if block.settings.background_image -%}
+            <div class="grid-item small {{ block_class }} small-card-img">
+              {{
+                block.settings.background_image
+                | image_url: width: 222
+                | image_tag: loading: 'lazy', width: block.settings.background_image.width, class: 'bghover'
+              }}
+            </div>
+
+          {%- else -%}
+            <div class="grid-item small {{ block_class }}">
+              <div class="hover-card">
+                <div class="text-container">
+                  <h2>{{ block.settings.heading }}</h2>
+                  <p>{{ block.settings.description }}</p>
+                </div>
+                <div class="capsule-icon">
+                  {% if block.settings.icons != 'icon-blank' %}
+                    {% render 'icon-hover', icon: block.settings.icons %}
+                  {% endif %}
+                </div>
+              </div>
+            </div>
+          {%- endif -%}
+        {%- when 'wide_card' -%}
+          {% comment %} Third Block {% endcomment %}
+          <div class="grid-item wide">
+            <div class="results-optimization-section">
+              <div class="results-optimization-title">{{ block.settings.heading }}</div>
+
+              <div class="results-optimization-content">
+                <div class="optimization-item">
+                  {% if block.settings.cure1 != '' %}
+                    <h4>{{ 'sections.hover.first_cure' | t }}</h4>
+                    <hr class="line">
+                  {% endif %}
+                  <h5>{{ block.settings.cure1 }}</h5>
+                  <p>{{ block.settings.description1 }}</p>
+                </div>
+                {% if block.settings.cure2 != '' %}
+                  <svg
+                    width="20"
+                    height="75"
+                    viewBox="0 0 20 75"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="circle-icon"
+                  >
+                    <circle cx="10" cy="10" r="10" fill="#EF9188"/>
+                  </svg>
+                {% endif %}
+
+                <div class="optimization-item opt-item">
+                  {% if block.settings.cure2 != '' %}
+                    <h4>{{ 'sections.hover.second_cure' | t }}</h4>
+                    <hr class="line">
+                  {% endif %}
+
+                  <h5>{{ block.settings.cure2 }}</h5>
+                  <p>{{ block.settings.description2 }}</p>
+                </div>
+                {% if block.settings.cure3 != '' %}
+                  <svg
+                    width="20"
+                    height="75"
+                    viewBox="0 0 20 75"
+                    fill="none"
+                    xmlns="http://www.w3.org/2000/svg"
+                    class="circle-icon"
+                  >
+                    <circle cx="10" cy="10" r="10" fill="#EF9188"/>
+                  </svg>
+                {% endif %}
+
+                {% if block.settings.cure3 != '' %}
+                  <div class="optimization-item opt-item">
+                    <h4>{{ 'sections.hover.third_cure' | t }}</h4>
+                    <hr class="line">
+                {% endif %}
+
+                <h5>{{ block.settings.cure3 }}</h5>
+                <p>{{ block.settings.description3 }}</p>
+              </div>
+            </div>
+          </div>
+          </div>
+        {%- when 'wide-narrow' -%}
+          {% comment %} Fourth Block {% endcomment %}
+
+          <div class="grid-item wide-narrow">
+            <div class="expandable-block">
+              <div class="content-wrapper">
+                <span class="main-text">{{ block.settings.heading }}</span>
+
+                <button class="toggle-button" onclick="toggleContent(event)">
+                  {% render 'icon-hover', icon: 'icon-plus-expand' %}
+                </button>
+              </div>
+
+              <div class="hidden-content">
+                <p>
+                  {{ block.settings.description }}
+                </p>
+              </div>
+            </div>
+          </div>
+      {%- endcase -%}
+    {%- endfor -%}
+  </div>
+</section>
+
+{% schema %}
+{
+  "name": "Hover section",
+  "blocks": [
+    {
+      "type": "product_card",
+      "name": "Product view card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "product",
+          "id": "product",
+          "label": "Product"
+        }
+      ]
+    },
+    {
+      "type": "hover_card",
+      "name": "Top small card",
+      "limit": 3,
+      "settings": [
+        {
+          "type": "image_picker",
+          "id": "background_image",
+          "label": "Background Image"
+        },
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        },
+        {
+          "type": "select",
+          "id": "icons",
+          "label": "Icons",
+          "options": [
+            {
+              "value": "icon-blank",
+              "label": "Blank"
+            },
+            {
+              "value": "icon-pills",
+              "label": "Pills"
+            },
+            {
+              "value": "icon-breakfast",
+              "label": "Breakfast"
+            }
+          ],
+          "default": "icon-blank"
+        }
+      ]
+    },
+    {
+      "type": "wide_card",
+      "name": "Middle Wide card",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "cure1",
+          "label": "First title"
+        },
+        {
+          "type": "text",
+          "id": "description1",
+          "label": "First description"
+        },
+        {
+          "type": "text",
+          "id": "cure2",
+          "label": "Second title"
+        },
+        {
+          "type": "text",
+          "id": "description2",
+          "label": "Second description"
+        },
+        {
+          "type": "text",
+          "id": "cure3",
+          "label": "Third title"
+        },
+        {
+          "type": "text",
+          "id": "description3",
+          "label": "Third description"
+        }
+      ]
+    },
+    {
+      "type": "wide-narrow",
+      "name": "Bottom wide Narrow",
+      "limit": 1,
+      "settings": [
+        {
+          "type": "text",
+          "id": "heading",
+          "label": "Heading"
+        },
+        {
+          "type": "text",
+          "id": "description",
+          "label": "Description"
+        }
+      ]
+    }
+  ],
+  "presets": [
+    {
+      "name": "Hover Section"
+    }
+  ]
+}
+{% endschema %}

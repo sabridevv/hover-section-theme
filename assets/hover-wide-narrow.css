@@ -1,0 +1,145 @@
+.grid-item.wide-narrow {
+  justify-content: left;
+  color: #863332;
+  grid-column: 2 / 5;
+  grid-row: 3 / 4;
+}
+.expandable-block {
+  display: flex;
+  flex-direction: column;
+  align-items: start;
+  background-color: #f9f6f4;
+  padding: 10px 20px;
+  border-radius: 8px;
+  position: relative;
+  width: 100%;
+}
+
+.content-wrapper {
+  display: flex;
+  justify-content: space-between;
+  width: 100%;
+}
+.toggle-button {
+  background-color: #c4625f;
+  border: none;
+  border-radius: 50%;
+  color: white;
+  width: 24px;
+  height: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-size: 16px;
+  cursor: pointer;
+  outline: none;
+}
+
+.main-text {
+  font-family: Lato;
+  font-size: 16px;
+  font-weight: 700;
+  line-height: 21.6px;
+  color: #8b4441;
+}
+
+.hidden-content {
+  font-family: Lato;
+  font-size: 14px;
+  font-weight: 400;
+  line-height: 18.9px;
+  display: none;
+  padding-top: 10px;
+  color: #863332;
+}
+/* Mobile resolution */
+
+@media (max-width: 768px) {
+  .grid-container {
+    grid-template-columns: 1fr;
+    grid-template-rows: auto;
+  }
+
+  .grid-item {
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .grid-item.wide,
+  .grid-item.wide-narrow,
+  .grid-item.small.top-right,
+  .grid-item.small.top-middle,
+  .grid-item.small.top-left {
+    width: 100%;
+    grid-column: auto;
+    grid-row: auto;
+  }
+
+  .grid-item.small.top-right,
+  .grid-item.small.top-middle,
+  .grid-item.small.top-left {
+    height: 110px;
+    position: relative;
+    min-height: 140px;
+  }
+
+  .hover-card {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    height: 110px;
+    padding: 0;
+    text-align: left;
+  }
+
+  .text-container {
+    position: absolute;
+    left: 19%;
+    top: 3px;
+  }
+
+  .capsule-icon {
+    position: absolute;
+    top: -8px;
+    left: 16px;
+  }
+
+  .results-optimization-content {
+    flex-direction: column;
+    gap: 0;
+  }
+
+  .circle-icon {
+    margin-top: 5px;
+    margin-left: -9px;
+  }
+
+  .optimization-item {
+    padding-left: 15px;
+    border-left: 2px solid #ef9188;
+  }
+
+  .opt-item {
+    margin-top: -49px;
+  }
+
+  .small-card-img,
+  .line {
+    display: none;
+  }
+  .hover-card .text-container h2 {
+    font-size: 22px;
+    line-height: 27.5px;
+  }
+  .hover-card .text-container p,
+  .optimization-item h4,
+  .optimization-item h5,
+  .optimization-item p,
+  .main-text {
+    font-size: 14px;
+    line-height: 21px;
+  }
+  .results-optimization-title {
+    font-size: 30px;
+    line-height: 37.5px;
+  }
+}
